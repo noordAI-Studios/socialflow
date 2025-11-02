@@ -1,0 +1,4 @@
+node_modules
+.env
+social_media.db
+uploads
