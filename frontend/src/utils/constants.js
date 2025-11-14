@@ -4,17 +4,22 @@ export const API_URL = 'http://localhost:5001/api';
 
 export const PLATFORMS = [
   'Instagram',
-  'Facebook',
-  'TikTok',
-  'LinkedIn',
+  'Fanvue Free Tier',
+  'Fanvue Paid Tier',
+  'Fanvue PTV Tier',
   'Twitter',
   'YouTube'
 ];
 
 export const STATUSES = [
-  'Brouillon',
-  'Prêt',
-  'Publié'
+  '📦 Not Assigned',
+  '✏️ Work in Progress',
+  '📝 Copy Needed',
+  '❓ Needs Review',
+  '🖼️ Media Needed',
+  '⚙️ Scheduled',
+  '⏳ Awaiting Posting',
+  '✅ Published'
 ];
 
 export const MONTHS = [
@@ -43,9 +48,9 @@ export const DAYS = [
 ];
 
 export const ASPECT_RATIOS = [
-  { value: '1:1', label: '1:1 Carré', class: 'aspect-square' },
-  { value: '4:5', label: '4:5 Portrait', class: 'aspect-[4/5]' },
-  { value: '9:16', label: '9:16 Story', class: 'aspect-[9/16]' }
+  { value: '1:1', label: 'Square', class: 'aspect-square' },
+  { value: '4:5', label: 'Portrait', class: 'aspect-[4/5]' },
+  { value: '9:16', label: 'Story/Reel', class: 'aspect-[9/16]' }
 ];
 
 export const MAX_IMAGES = 10;

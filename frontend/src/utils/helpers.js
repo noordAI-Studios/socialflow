@@ -2,15 +2,26 @@
 import { VIDEO_EXTENSIONS } from './constants';
 
 export const getStatusColor = (status, darkMode = true) => {
-  switch (status) {
-    case 'Brouillon':
-      return darkMode ? 'bg-yellow-900/30 text-yellow-300' : 'bg-yellow-100 text-yellow-800';
-    case 'Prêt':
-      return darkMode ? 'bg-blue-900/30 text-blue-300' : 'bg-blue-100 text-blue-800';
-    case 'Publié':
-      return darkMode ? 'bg-green-900/30 text-green-300' : 'bg-green-100 text-green-800';
+
+switch (status) {
+ case  '📦 Not Assigned':
+ return darkMode ? 'bg-yellow-900/30 text-yellow-900' : 'bg-yellow-100 text-yellow-800';
+ case  '✏️ Work in Progress':
+      return darkMode ? 'bg-indigo-900/30 text-indigo-900' : 'bg-indigo-100 text-indigo-800';
+ case  '📝 Copy Needed':
+      return darkMode ? 'bg-blue-900/30 text-blue-900' : 'bg-blue-100 text-blue-800';
+ case  '❓ Needs Review':
+      return darkMode ? 'bg-orange-900/30 text-orange-900' : 'bg-orange-100 text-orange-800';
+ case  '🖼️ Media Needed':
+      return darkMode ? 'bg-red-900/30 text-red-900' : 'bg-red-100 text-red-800';
+ case  '⚙️ Scheduled':
+      return darkMode ? 'bg-teal-900/30 text-teal-900' : 'bg-teal-100 text-teal-800';
+ case  '⏳ Awaiting Posting':
+      return darkMode ? 'bg-purple-900/30 text-purple-900' : 'bg-purple-100 text-purple-800';
+ case  '✅ Published':
+      return darkMode ? 'bg-green-900/30 text-green-900' : 'bg-green-100 text-green-800';
     default:
-      return darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-800';
+      return darkMode ? 'bg-gray-700 text-gray-900' : 'bg-gray-100 text-gray-800';
   }
 };
 

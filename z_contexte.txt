@@ -1,0 +1,61 @@
+🧠 Structure du projet :
+───────────────────────────
+├── .gitignore
+├── backend
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── server.js
+│   ├── social_media.db
+│   └── uploads
+│       ├── 1762915582880-84448059.png
+│       └── 1762915582887-251723523.mp4
+├── frontend
+│   ├── .env
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── components
+│   │   │   ├── CalendarView.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── MediaCarousel.jsx
+│   │   │   ├── MediaUploader.jsx
+│   │   │   ├── PostCard.jsx
+│   │   │   ├── PostModal.jsx
+│   │   │   └── PreviewModal.jsx
+│   │   ├── hooks
+│   │   │   ├── useGoogleDrive.js
+│   │   │   ├── useMediaUpload.js
+│   │   │   └── usePosts.js
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── services
+│   │   │   └── api.js
+│   │   ├── shared
+│   │   │   └── components
+│   │   │       └── Button.jsx
+│   │   └── utils
+│   │       ├── constants.js
+│   │       └── helpers.js
+│   └── vite.config.js
+├── src
+│   └── config
+└── tree.js
+
+
+📂 **Fichiers recommandés pour comprendre le projet**
+──────────────────────────────────────────────
+❌ (manquant) index.js
+❌ (manquant) core/startup.js
+❌ (manquant) core/bot.js
+❌ (manquant) core/lifecycle.js
+❌ (manquant) api/server.js
+❌ (manquant) api/routes.js
+❌ (manquant) utils/logger.js
+❌ (manquant) utils/errorHandler.js
+❌ (manquant) core/loadFiles.js

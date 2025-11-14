@@ -8,7 +8,7 @@ export const PostCard = ({
   post, 
   darkMode, 
   onEdit, 
-  onDelete, 
+  onDelete,
   onPreview,
   onDragStart 
 }) => {

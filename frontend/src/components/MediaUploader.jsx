@@ -1,26 +1,33 @@
 // src/components/MediaUploader.jsx
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Upload, X } from 'lucide-react';
-import { useMediaUpload } from '../hooks/useMediaUpload';
+import { api } from '../services/api';
 import { ACCEPTED_MEDIA_TYPES } from '../utils/constants';
 
-export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
-  const { uploading, uploadMultiple, isVideo: checkIsVideo } = useMediaUpload();
+const MediaUploader = ({ images, onImagesChange, darkMode }) => {
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef();
 
   const textSecondary = darkMode ? 'text-gray-400' : 'text-gray-600';
   const borderClass = darkMode ? 'border-gray-700' : 'border-gray-200';
 
   const handleFileSelect = async (e) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
 
-    const uploadedMedia = await uploadMultiple(Array.from(files));
-    if (uploadedMedia.length > 0) {
-      onImagesChange([...images, ...uploadedMedia]);
+    setUploading(true);
+    try {
+      const uploadedMedia = await api.uploadMultipleMedia(files);
+      if (uploadedMedia.length > 0) {
+        onImagesChange([...images, ...uploadedMedia]);
+      }
+    } catch (err) {
+      console.error('Erreur upload media:', err);
+      alert('Erreur lors de l’upload');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
     }
-
-    // Reset input
-    e.target.value = '';
   };
 
   const removeImage = (index) => {
@@ -30,7 +37,7 @@ export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
 
   const isVideoMedia = (img) => {
     if (img.mediaType === 'video') return true;
-    if (img.imageUrl && checkIsVideo(img.imageUrl)) return true;
+    if (img.imageUrl && /\.(mp4|mov)$/i.test(img.imageUrl)) return true;
     if (img.imageData && img.imageData.startsWith('data:video')) return true;
     return false;
   };
@@ -40,15 +47,16 @@ export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
       <div className={`border-2 border-dashed ${borderClass} rounded-lg p-6 text-center`}>
         <input
           type="file"
+          ref={fileRef}
           accept={ACCEPTED_MEDIA_TYPES}
           multiple
           onChange={handleFileSelect}
           className="hidden"
-          id="media-upload"
           disabled={uploading}
+          id="media-upload"
         />
-        <label 
-          htmlFor="media-upload" 
+        <label
+          htmlFor="media-upload"
           className={`cursor-pointer flex flex-col items-center gap-2 ${uploading ? 'opacity-50' : ''}`}
         >
           <Upload size={32} className={textSecondary} />
@@ -66,22 +74,24 @@ export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
           {images.map((img, index) => {
             const isVideoFile = isVideoMedia(img);
             const mediaSrc = img.imageData || img.imageUrl;
-            
+
             return (
               <div key={index} className="relative">
                 {isVideoFile ? (
-                  <video 
-                    src={mediaSrc} 
+                  <video
+                    src={mediaSrc}
                     className="w-full h-24 object-cover rounded-lg"
                     muted
+                    controls
                   />
                 ) : (
-                  <img 
-                    src={mediaSrc} 
+                  <img
+                    src={mediaSrc}
                     alt={`Media ${index + 1}`}
                     className="w-full h-24 object-cover rounded-lg"
                   />
                 )}
+
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
@@ -89,11 +99,13 @@ export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
                 >
                   <X size={14} />
                 </button>
+
                 {index === 0 && (
                   <div className="absolute bottom-1 left-1 bg-blue-600 text-white px-2 py-0.5 rounded text-xs">
                     Principale
                   </div>
                 )}
+
                 {isVideoFile && (
                   <div className="absolute top-1 left-1 bg-black/70 text-white px-1.5 py-0.5 rounded text-xs">
                     🎥
@@ -107,3 +119,5 @@ export const MediaUploader = ({ images, onImagesChange, darkMode }) => {
     </div>
   );
 };
+
+export default MediaUploader;

@@ -16,7 +16,6 @@ const App = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [previewPost, setPreviewPost] = useState(null);
-  const [draggedPost, setDraggedPost] = useState(null);
 
   const {
     filteredPosts,
@@ -76,7 +75,7 @@ const App = () => {
   const handleExportCSV = () => {
     try {
       api.exportCSV();
-    } catch (error) {
+    } catch {
       // Fallback côté client
       const headers = ['Titre', 'Plateforme', 'Caption', 'Images', 'Prompt IA', 'Statut', 'Date Publication'];
       const rows = filteredPosts.map(post => [
@@ -144,7 +143,6 @@ const App = () => {
                   onEdit={handleEditPost}
                   onDelete={deletePost}
                   onPreview={handlePreview}
-                  onDragStart={setDraggedPost}
                 />
               ))}
             </div>

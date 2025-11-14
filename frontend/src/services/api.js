@@ -10,7 +10,7 @@ const handleResponse = async (response) => {
 };
 
 export const api = {
-  // Posts
+  // --- Posts ---
   getPosts: async (filters = {}) => {
     const params = new URLSearchParams(filters);
     const response = await fetch(`${API_URL}/posts?${params}`);
@@ -41,9 +41,7 @@ export const api = {
   },
 
   deletePost: async (id) => {
-    const response = await fetch(`${API_URL}/posts/${id}`, {
-      method: 'DELETE'
-    });
+    const response = await fetch(`${API_URL}/posts/${id}`, { method: 'DELETE' });
     return handleResponse(response);
   },
 
@@ -56,11 +54,23 @@ export const api = {
     return handleResponse(response);
   },
 
-  // Upload
-  uploadImage: async (file) => {
+  // --- Media Library ---
+  getMedia: async (filters = {}) => {
+    const params = new URLSearchParams(filters);
+    const response = await fetch(`${API_URL}/media?${params}`);
+    return handleResponse(response);
+  },
+
+  getMediaById: async (id) => {
+    const response = await fetch(`${API_URL}/media/${id}`);
+    return handleResponse(response);
+  },
+
+  uploadMedia: async (file, extraData = {}) => {
     const formData = new FormData();
-    formData.append('image', file);
-    
+    formData.append('file', file);
+    Object.entries(extraData).forEach(([key, value]) => formData.append(key, value));
+
     const response = await fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: formData
@@ -68,20 +78,24 @@ export const api = {
     return handleResponse(response);
   },
 
-  uploadMultipleImages: async (files) => {
+  uploadMultipleMedia: async (files, extraData = {}) => {
     const formData = new FormData();
-    files.forEach(file => {
-      formData.append('images', file);
-    });
-    
-    const response = await fetch(`${API_URL}/upload-multiple`, {
+    files.forEach(f => formData.append('images', f));
+    Object.entries(extraData).forEach(([key, value]) => formData.append(key, value));
+
+    const response = await fetch(`${API_URL}/upload/multiple`, {
       method: 'POST',
       body: formData
     });
     return handleResponse(response);
   },
 
-  // Export
+  deleteMedia: async (id) => {
+    const response = await fetch(`${API_URL}/media/${id}`, { method: 'DELETE' });
+    return handleResponse(response);
+  },
+
+  // --- Export CSV ---
   exportCSV: () => {
     window.open(`${API_URL}/export/csv`, '_blank');
   }
