@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { X, Heart, Share, MessageCircle, Star, Instagram, Fan,CloudUpload, LibraryBig } from 'lucide-react';
 import MediaUploader from './MediaUploader';
 import MediaLibrary from './MediaLibrary';
 import { MediaCarousel } from './MediaCarousel';
@@ -104,8 +105,8 @@ export const PostModal = ({
           <div className={`w-full h-full ${cardBg} rounded-full`} />
         </div>
         <div className="flex-1">
-          <div className="font-semibold text-sm">votre_compte</div>
-          <div className={`text-xs ${textSecondary}`}>{formData.platform}</div>
+          <div className="font-semibold text-sm">itsvictoriababy</div>
+          <div className={`text-xs ${textSecondary}`}>Audio original</div>
         </div>
       </div>
 
@@ -119,19 +120,20 @@ export const PostModal = ({
         )}
       </div>
 
-      <div className="p-3">
+      {/* Interactions */}
+      <div className={`${cardBg} p-3`}>
         <div className="flex items-center gap-4 mb-2">
-          <span className="text-xl">❤️</span>
-          <span className="text-xl">💬</span>
-          <span className="text-xl">📤</span>
-          <span className="text-xl ml-auto">🔖</span>
+          <button className="text-2xl"><Heart /></button>
+          <button className="text-2xl"><MessageCircle /></button>
+          <button className="text-2xl"><Share /></button>
+          <button className="text-2xl ml-auto"><Star /></button>
         </div>
 
         <div className="text-sm font-semibold mb-1">1,234 likes</div>
 
         {formData.caption && (
           <div className="text-sm">
-            <span className="font-semibold">votre_compte</span>{' '}
+            <span className="font-semibold">itsvictoriababy</span>{' '}
             <span className="wrap-break-word">{formData.caption}</span>
           </div>
         )}
@@ -181,8 +183,8 @@ export const PostModal = ({
 
       <div className="p-3">
         <div className="flex items-center gap-4 mb-2">
-          <span className="text-xl">❤️</span>
-          <span className="text-xl">💬</span>
+          <button className="text-2xl"><Heart /></button>
+          <button className="text-2xl"><MessageCircle /></button>
         </div>
         <div className="text-sm font-semibold">101 likes</div>
       </div>
@@ -275,20 +277,24 @@ export const PostModal = ({
                     type="button"
                     onClick={() => setMediaSource('upload')}
                     className={`flex-1 px-4 py-2 rounded-lg text-sm ${
-                      mediaSource === 'upload' ? 'bg-blue-600 text-white' : `${inputBg}`
+                      mediaSource === 'upload' 
+                      ? 'bg-pink-600 text-white flex items-center justify-center gap-2'
+                      : `${inputBg}  text-pink-600 flex items-center justify-center gap-2`
                     }`}
                   >
-                    📤 Upload
+                    <CloudUpload/> Upload
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setMediaSource('library')}
                     className={`flex-1 px-4 py-2 rounded-lg text-sm ${
-                      mediaSource === 'library' ? 'bg-blue-600 text-white' : `${inputBg}`
+                      mediaSource === 'library' 
+                                            ? 'bg-pink-600 text-white flex items-center justify-center gap-2'
+                      : `${inputBg}  text-pink-600 flex items-center justify-center gap-2`
                     }`}
                   >
-                    📚 Bibliothèque
+                    <LibraryBig /> Bibliothèque
                   </button>
                 </div>
 
@@ -309,55 +315,6 @@ export const PostModal = ({
                   </button>
                 )}
 
-                {/* Thumbnails sélectionnées */}
-                {formData.images.length > 0 && (
-                  <div className="mt-3">
-                    <div className={`text-sm ${textSecondary} mb-2`}>
-                      {formData.images.length} média{formData.images.length > 1 && 's'}
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-2">
-                      {formData.images.map((img, index) => {
-                        const isVideo = img.mediaType === 'video' || img.imageUrl?.endsWith('.mp4');
-                        const src = img.imageData || img.thumbnailUrl || img.imageUrl;
-
-                        return (
-                          <div key={index} className="relative group">
-
-                            {isVideo ? (
-                              <video src={src} className="w-full h-20 object-cover rounded-lg" muted />
-                            ) : (
-                              <img src={src} className="w-full h-20 object-cover rounded-lg" alt="" />
-                            )}
-
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updated = formData.images.filter((_, i) => i !== index);
-                                handleImagesChange(updated);
-                              }}
-                              className="absolute -top-1 -right-1 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                            >
-                              ✕
-                            </button>
-
-                            {img.mediaId && (
-                              <div className="absolute bottom-1 left-1 bg-blue-600 text-white px-1 text-xs rounded">
-                                📚
-                              </div>
-                            )}
-
-                            {index === 0 && (
-                              <div className="absolute bottom-1 right-1 bg-green-600 text-white px-1.5 py-0.5 rounded text-xs">
-                                Principale
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Prompt IA */}
@@ -395,11 +352,11 @@ export const PostModal = ({
                   onClick={() => setPreviewPlatform('instagram')}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm ${
                     previewPlatform === 'instagram'
-                      ? 'bg-pink-600 text-white'
-                      : `${inputBg}`
+                      ? 'bg-pink-600 text-white flex items-center justify-center gap-2'
+                      : `${inputBg}  text-pink-600 flex items-center justify-center gap-2`
                   }`}
                 >
-                  📷 Instagram
+                <Instagram/>  Instagram
                 </button>
 
                 <button
@@ -407,11 +364,11 @@ export const PostModal = ({
                   onClick={() => setPreviewPlatform('fanvue')}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm ${
                     previewPlatform === 'fanvue'
-                      ? 'bg-pink-600 text-white'
-                      : `${inputBg}`
+                      ? 'bg-pink-600 text-white flex items-center justify-center gap-2'
+                      : `${inputBg}  text-pink-600 flex items-center justify-center gap-2`
                   }`}
                 >
-                  💎 Fanvue
+                  <Fan /> Fanvue
                 </button>
               </div>
 

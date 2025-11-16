@@ -1,6 +1,7 @@
 const postModel = require('../models/postModel');
 const db = require('../db');
 const { exportPostsToCSV } = require('../utils/csvExport');
+const mediaModel = require('../models/mediaModel');
 
 async function getPosts(req, res) {
   postModel.getPosts(req.query, (err, posts) => {
@@ -57,7 +58,14 @@ async function createPost(req, res) {
       );
     });
   });
-}
+  // Tracker les médias utilisés
+  const images = req.body.images || [];
+  for (const img of images) {
+    if (img.mediaId) {
+      mediaModel.incrementUsage(img.mediaId, newPost.id, () => {});
+    }
+  }
+}  
 
 async function updatePost(req, res) {
   const now = new Date().toISOString();
