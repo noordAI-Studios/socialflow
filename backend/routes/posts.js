@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/postController');
 
 router.get('/', controller.getPosts);
+router.patch('/:id/date', controller.updatePostDate); // ← indispensable
 router.get('/:id', controller.getPostById);
 router.post('/', controller.createPost);
 router.put('/:id', controller.updatePost);

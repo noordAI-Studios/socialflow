@@ -115,5 +115,29 @@ async function exportCSV(req,res){
     res.send(csv);
   });
 }
+async function updatePostDate(req, res) {
+  const id = req.params.id;
+  const { publishDate } = req.body;
+  const now = new Date().toISOString();
 
-module.exports = { getPosts, getPostById, createPost, updatePost, deletePost, exportCSV };
+  db.run(
+    'UPDATE posts SET publishDate=?, updatedAt=? WHERE id=?',
+    [publishDate, now, id],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Post non trouvé' });
+      }
+
+      return res.json({
+        message: 'Date mise à jour',
+        id,
+        publishDate
+      });
+    }
+  );
+}
+module.exports = { getPosts, getPostById, createPost, updatePost, deletePost, exportCSV, updatePostDate };
