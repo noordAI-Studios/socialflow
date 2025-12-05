@@ -62,7 +62,7 @@ async function createPost(req, res) {
   const images = req.body.images || [];
   for (const img of images) {
     if (img.mediaId) {
-      mediaModel.incrementUsage(img.mediaId, newPost.id, () => {});
+      mediaModel.incrementUsage(img.mediaId, postId, () => {});
     }
   }
 }  

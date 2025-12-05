@@ -4,6 +4,52 @@
 const db = require('./db');
 
 const tables = [
+  `
+    CREATE TABLE IF NOT EXISTS versions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      postId TEXT NOT NULL,
+      date TEXT NOT NULL,
+      title TEXT,
+      caption TEXT,
+      status TEXT,
+      FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
+    )
+  `,
+  `CREATE TABLE IF NOT EXISTS images (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      postId TEXT NOT NULL,
+      imageUrl TEXT,
+      imageData TEXT,
+      mediaType TEXT DEFAULT 'image',
+      isPrimary INTEGER DEFAULT 0,
+      position INTEGER DEFAULT 0,
+      createdAt TEXT NOT NULL,
+      FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
+    )
+  `,
+  ` CREATE TABLE IF NOT EXISTS posts (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      platform TEXT NOT NULL,
+      caption TEXT,
+      imageUrl TEXT,
+      imageData TEXT,
+      aiPrompt TEXT,
+      status TEXT NOT NULL,
+      publishDate TEXT,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL,
+      userId TEXT
+    )
+  `,
+  `
+    CREATE TABLE IF NOT EXISTS users (
+      id TEXT PRIMARY KEY,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      createdAt TEXT NOT NULL
+    )
+  `,
   // Table principale des médias
   `CREATE TABLE IF NOT EXISTS media (
     id TEXT PRIMARY KEY,
@@ -114,3 +160,4 @@ function initTables() {
 
 // Exécuter
 initTables();
+
